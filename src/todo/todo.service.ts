@@ -79,8 +79,10 @@ export class TodoService {
    * @param payload
    */
   async createTodo(payload: ITodo) {
+    console.log('payload.groupId: ', payload.groupId);
     const newTodo = this.TodoRepository.create({
       title: payload.title,
+      todoGroupId: payload.groupId,
     });
     return this.TodoRepository.save(newTodo);
   }

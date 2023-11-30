@@ -20,7 +20,7 @@ export class TodoGroup {
   @Column('integer', { default: 0 })
   notification = 0;
 
-  @OneToMany(() => TodoItem, (TodoItem) => TodoItem.TodoGroup)
+  @OneToMany(() => TodoItem, (TodoItem) => TodoItem.todoGroup)
   items: TodoItem[];
 
   @ManyToOne(() => Users)

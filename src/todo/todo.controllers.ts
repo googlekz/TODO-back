@@ -23,12 +23,10 @@ export class TodoControllers {
   }
 
   @Post('item')
-  async createTodo(@Body() body, @Req() req) {
-    const userId = await this.todoService.getUserIdFromToken(req);
-
+  async createTodo(@Body() body) {
     return this.todoService.createTodo({
       title: body.title,
-      groupId: userId,
+      groupId: body.groupId,
     });
   }
 }

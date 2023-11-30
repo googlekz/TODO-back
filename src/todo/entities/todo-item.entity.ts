@@ -1,13 +1,5 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { TodoGroup } from './todo-group.entity';
-import { Users } from '../../global/entities/users.entity';
 
 @Entity()
 export class TodoItem {
@@ -20,6 +12,9 @@ export class TodoItem {
   @Column('boolean', { default: false })
   isDone = false;
 
-  @ManyToOne(() => TodoGroup, (TodoGroup) => TodoGroup.id, { cascade: true })
-  TodoGroup: TodoGroup;
+  @ManyToOne(() => TodoGroup, (TodoGroup) => TodoGroup.items)
+  todoGroup: TodoGroup;
+
+  @Column()
+  todoGroupId: number;
 }
