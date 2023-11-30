@@ -51,7 +51,7 @@ export class TokenService {
   }
 
   /**
-   * Удаление токена
+   * Найти токен
    * @param refreshToken
    */
   async removeToken(refreshToken: string) {
@@ -99,9 +99,9 @@ export class TokenService {
       return tokenData;
     }
 
-    throw new HttpException(
-      { status: 401, errors: ['Не удалось выйти'] },
-      HttpStatus.BAD_REQUEST,
-    );
+    // throw new HttpException(
+    //   { status: 401, errors: ['Не удалось выйти'] },
+    //   HttpStatus.BAD_REQUEST,
+    // );
   }
 }

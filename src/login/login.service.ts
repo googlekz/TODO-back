@@ -101,4 +101,16 @@ export class LoginService {
       login,
     };
   }
+
+  /**
+   * Нахождение пользователя по логину
+   * @param login
+   */
+  async findUserFromLogin(login) {
+    return await this.UsersRepository.findOne({
+      where: {
+        login,
+      },
+    });
+  }
 }

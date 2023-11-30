@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res, Get } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { Response } from 'express';
 
@@ -51,11 +51,11 @@ export class RefreshControllers {
    * @param req
    * @param res
    */
-  @Post()
+  @Get()
   async refresh(@Req() req, @Res() res) {
     const { refreshToken } = req.cookies;
     const userData = await this.refreshService.refresh(refreshToken);
-    res.clearCookie('refreshToken');
+    // res.clearCookie('refreshToken');
     return res.json(userData);
   }
 }

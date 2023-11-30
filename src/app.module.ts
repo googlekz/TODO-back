@@ -1,11 +1,16 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoginModule } from './login/login.module';
 import { RegistrationModule } from './registration/registration.module';
+import { TodoModule } from './todo/todo.module';
+import { AuthMiddleware } from './middlewares/auth-middleware';
+import { TokenService } from './helpers/token';
+import { Token } from './global/entities/token.entity';
 
 @Module({
   imports: [
+    TodoModule,
     RegistrationModule,
     LoginModule,
     ConfigModule.forRoot({ isGlobal: true }),
@@ -23,6 +28,12 @@ import { RegistrationModule } from './registration/registration.module';
       }),
       inject: [ConfigService],
     }),
+    TypeOrmModule.forFeature([Token]),
   ],
+  providers: [TokenService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(AuthMiddleware).forRoutes('todo/groups');
+  }
+}
