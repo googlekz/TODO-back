@@ -19,16 +19,12 @@ export class LoginService {
    */
   async login(payload) {
     const { login, password } = payload;
-    const user = await this.UsersRepository.findOne({
-      where: {
-        login,
-      },
-    });
+    const user = await this.findUserFromLogin(login);
     if (!user) {
       throw new HttpException(
         {
           status: 401,
-          errors: ['Пользователь не найден'],
+          errors: ['Некорректный логин или пароль'],
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -38,7 +34,7 @@ export class LoginService {
       throw new HttpException(
         {
           status: 401,
-          errors: ['Некорректный пароль'],
+          errors: ['Некорректный логин или пароль'],
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -109,7 +105,7 @@ export class LoginService {
   async findUserFromLogin(login) {
     return await this.UsersRepository.findOne({
       where: {
-        login,
+        login: login.toLowerCase(),
       },
     });
   }

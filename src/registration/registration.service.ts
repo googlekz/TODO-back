@@ -28,7 +28,11 @@ export class RegistrationService {
       );
     }
 
-    const { login, password } = userData;
+    let { login } = userData;
+    const { password } = userData;
+
+    login = login.toLowerCase();
+
     const candidate = await this.UsersRepository.findOne({
       where: { login },
     });

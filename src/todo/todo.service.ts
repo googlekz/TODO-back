@@ -85,6 +85,15 @@ export class TodoService {
     });
     return this.TodoRepository.save(newTodo);
   }
+
+  async updateItem(id, body) {
+    const itemToUpdate = await this.TodoRepository.findOneBy({
+      id,
+    });
+
+    itemToUpdate.isDone = body.isDone;
+    await this.TodoRepository.save(itemToUpdate);
+  }
 }
 
 interface ITodo {
